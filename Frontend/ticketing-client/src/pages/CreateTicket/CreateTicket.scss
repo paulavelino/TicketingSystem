@@ -1,0 +1,33 @@
+.create-ticket {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 24px;
+
+    &__header {
+        margin-bottom: 24px;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    input,
+    textarea,
+    select {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    button {
+        width: fit-content;
+        padding: 10px 20px;
+    }
+}
