@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ticketService from "../../services/ticketService";
+import commentService from "../../services/commentService";
 
 const TicketDetail = () => {
     const { id } = useParams();
-
     const [ticket, setTicket] = useState(null);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState("");
 
     useEffect(() => {
         loadTicket();
+        loadComments();
     }, []);
 
     const loadTicket = async () => {
@@ -34,6 +37,34 @@ const TicketDetail = () => {
             });
 
             alert("Ticket status updated successfully.");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const loadComments = async () => {
+        try {
+            const response = await commentService.getComments(id);
+            setComments(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleAddComment = async () => {
+        if (!newComment.trim()) {
+            return;
+        }
+
+        try {
+            await commentService.createComment({
+                ticketId: Number(id),
+                message: newComment
+            });
+
+            setNewComment("");
+
+            await loadComments();
         } catch (error) {
             console.error(error);
         }
@@ -97,6 +128,38 @@ const TicketDetail = () => {
         <button onClick={handleSaveStatus}>
             Save Status
         </button>
+
+        <hr />
+
+        <div className="comments-section">
+
+            <h2>Comments</h2>
+
+            <div className="comment-form">
+                <textarea
+                    rows="3"
+                    placeholder="Write a comment..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                />
+
+                <button onClick={handleAddComment}>
+                    Add Comment
+                </button>
+            </div>
+
+            {comments.length === 0 ? (
+                <p>No comments yet.</p>
+            ) : (
+                comments.map((comment) => (
+                    <div className="comment-card" key={comment.id}>
+                        <p>{comment.message}</p>
+                        <small>{comment.createdDate}</small>
+                    </div>
+                ))
+            )}
+
+        </div>
 
     </div>
 );

@@ -16,8 +16,10 @@ builder.Services.AddSwaggerGen();
 //register AppDBContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//register ticket service
+//register services
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+
 
 //add cors
 builder.Services.AddCors(options =>
