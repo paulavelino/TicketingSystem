@@ -315,13 +315,11 @@ TicketingSystem
 
 # Screenshots
 
-You may include screenshots here if desired.
-
 - Dashboard
-    ![alt text](image.png)
+    ![Application Screenshot](screenshots/image.png)
 - Create Ticket
-    ![alt text](image-1.png)
+    ![Application Screenshot](screenshots/image-1.png)
 - Ticket Detail
-    ![alt text](image-2.png)
+    ![Application Screenshot](screenshots/image-2.png)
 ---
 
