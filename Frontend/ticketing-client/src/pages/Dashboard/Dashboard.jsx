@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import "./Dashboard.scss";
 import ticketService from "../../services/ticketService";
+import { useNavigate } from "react-router-dom";
+
 
 const Dashboard = () => {
-
+    const navigate = useNavigate();
     const [tickets, setTickets] = useState([]);
 
     useEffect(() => {
@@ -63,7 +65,7 @@ const Dashboard = () => {
                                         {new Date(ticket.createdDate).toLocaleDateString()}
                                     </td>
                                     <td>
-                                        <button>View</button>
+                                        <button onClick={() => navigate(`/ticket/${ticket.ticketId}`)}>View</button>
                                     </td>
                                 </tr>
                             ))}
