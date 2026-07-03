@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ticketService from "../../services/ticketService";
 import commentService from "../../services/commentService";
+import "./TicketDetail.scss";
 
 const TicketDetail = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [ticket, setTicket] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
@@ -15,6 +17,10 @@ const TicketDetail = () => {
         "Alice",
         "Charlie",
     ];
+
+    const formatDate = (date) => {
+        return new Date(date).toLocaleString();
+    };
 
     useEffect(() => {
         loadTicket();
@@ -77,111 +83,179 @@ const TicketDetail = () => {
     }
 
     return (
-    <div className="ticket-detail">
+        <div className="ticket-detail">
 
-        <h1>Ticket Detail</h1>
-
-        <div>
-            <strong>Title:</strong> {ticket.title}
-        </div>
-
-        <div>
-            <strong>Description:</strong> {ticket.description}
-        </div>
-
-        <div>
-            <strong>Requester:</strong> {ticket.requesterName}
-        </div>
-
-        <div>
-            <strong>Category:</strong> {ticket.category}
-        </div>
-
-        <div>
-            <strong>Priority:</strong> {ticket.priority}
-        </div>
-
-        <div>
-            <strong>Status:</strong>
-            <select
-                value={ticket.status}
-                onChange={(e) =>
-                    setTicket((prev) => ({
-                        ...prev,
-                        status: e.target.value
-                    }))
-                }
+            <button
+                className="btn-back"
+                onClick={() => navigate("/")}
             >
-                <option value="Open">Open</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Resolved">Resolved</option>
-            </select>
-        </div>
+                ← Back to Dashboard
+            </button>
 
-        <div>
-            <strong>Assigned To:</strong>
+            <div className="ticket-detail__card">
 
-            <select
-                value={ticket.assignedTo || ""}
-                onChange={(e) =>
-                    setTicket((prev) => ({
-                        ...prev,
-                        assignedTo: e.target.value
-                    }))
-                }
-            >
-                <option value="">Unassigned</option>
+                <div className="ticket-detail__header">
+                    <h1>Ticket Details</h1>
+                    <p>
+                        View and manage this support request.
+                    </p>
+                </div>
 
-                {agents.map((agent) => (
-                    <option key={agent} value={agent}>
-                        {agent}
-                    </option>
-                ))}
-            </select>
-        </div>
+                <div className="ticket-info">
 
-        <div>
-            <strong>Created At:</strong> {ticket.createdDate}
-        </div>
+    <div className="info-grid">
 
-        <button onClick={handleSaveChanges}>
-            Save Changes
-        </button>
+        {/* LEFT COLUMN */}
+        <div className="info-col">
 
-        <hr />
-
-        <div className="comments-section">
-
-            <h2>Comments</h2>
-
-            <div className="comment-form">
-                <textarea
-                    rows="3"
-                    placeholder="Write a comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                />
-
-                <button onClick={handleAddComment}>
-                    Add Comment
-                </button>
+            <div className="info-row">
+                <span>Title</span>
+                <strong>{ticket.title}</strong>
             </div>
 
-            {comments.length === 0 ? (
-                <p>No comments yet.</p>
-            ) : (
-                comments.map((comment) => (
-                    <div className="comment-card" key={comment.id}>
-                        <p>{comment.message}</p>
-                        <small>{comment.createdDate}</small>
-                    </div>
-                ))
-            )}
+            <div className="info-row">
+                <span>Description</span>
+                <strong>{ticket.description}</strong>
+            </div>
+
+            <div className="info-row">
+                <span>Priority</span>
+                <span className={`priority-badge ${ticket.priority.toLowerCase()}`}>
+                    {ticket.priority}
+                </span>
+            </div>
+
+            <div className="info-row">
+                <span>Assigned To</span>
+
+                <select
+                    value={ticket.assignedTo || ""}
+                    onChange={(e) =>
+                        setTicket((prev) => ({
+                            ...prev,
+                            assignedTo: e.target.value
+                        }))
+                    }
+                >
+                    <option value="">Unassigned</option>
+                    {agents.map((agent) => (
+                        <option key={agent} value={agent}>
+                            {agent}
+                        </option>
+                    ))}
+                </select>
+
+            </div>
+
+        </div>
+
+        {/* RIGHT COLUMN */}
+        <div className="info-col">
+
+            <div className="info-row">
+                <span>Requester</span>
+                <strong>{ticket.requesterName}</strong>
+            </div>
+
+            <div className="info-row">
+                <span>Category</span>
+                <strong>{ticket.category}</strong>
+            </div>
+
+            <div className="info-row">
+                <span>Status</span>
+
+                <select
+                    value={ticket.status}
+                    onChange={(e) =>
+                        setTicket((prev) => ({
+                            ...prev,
+                            status: e.target.value
+                        }))
+                    }
+                >
+                    <option>Open</option>
+                    <option>In Progress</option>
+                    <option>Resolved</option>
+                </select>
+
+            </div>
+
+            <div className="info-row">
+                <span>Created</span>
+                <strong>{formatDate(ticket.createdDate)}</strong>
+            </div>
 
         </div>
 
     </div>
-);
+
+</div>
+
+                <div className="ticket-actions">
+
+                    <button
+                        className="btn-primary"
+                        onClick={handleSaveChanges}
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div className="comments-card">
+
+                <h2>Comments</h2>
+
+                <div className="comment-form">
+
+                    <textarea
+                        rows="3"
+                        placeholder="Write a comment..."
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                    />
+
+                    <button
+                        className="btn-primary"
+                        onClick={handleAddComment}
+                    >
+                        Add Comment
+                    </button>
+
+                </div>
+
+                {comments.length === 0 ? (
+
+                    <p className="empty-comments">
+                        No comments yet.
+                    </p>
+
+                ) : (
+
+                    comments.map(comment => (
+
+                        <div
+                            className="comment-card"
+                            key={comment.id}
+                        >
+                            <p>{comment.message}</p>
+
+                            <small>
+                                {formatDate(comment.createdDate)}
+                            </small>
+                        </div>
+
+                    ))
+
+                )}
+
+            </div>
+
+        </div>
+    );
 };
 
 export default TicketDetail;

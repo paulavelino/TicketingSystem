@@ -66,71 +66,81 @@ const CreateTicket = () => {
 
     return (
         <div className="create-ticket">
+            <button className="btn-back" onClick={() => navigate("/")} >
+                ← Back to Dashboard
+            </button>
+
+            <div className="create-ticket__card">
 
                 <div className="create-ticket__header">
-                <h1>Create Ticket</h1>
-                <p>Create a new internal support request.</p>
-            </div>
+                    <h1>Create New Ticket</h1>
+                    <p>Submit a new internal support request.</p>
+                </div>
 
-            <form className="create-ticket__form" onSubmit={handleSubmit}>
+                <form className="create-ticket__form" onSubmit={handleSubmit}>
 
-                <div className="form-group">
-                    <label>Title</label>
-                    <input type="text" name="title" value={formData.title} onChange={handleChange}/>
-                        {errors.title && (
+                    <div className="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" placeholder="Enter ticket title" value={formData.title} onChange={handleChange}/>
+                            {errors.title && (
+                                <span className="error-message">
+                                    {errors.title}
+                                </span>
+                            )}
+                    </div>
+
+                    <div className="form-group">
+                        <label>Description</label>
+                        <textarea rows="5" name="description" placeholder="Describe the issue..." value={formData.description} onChange={handleChange}></textarea>
+                        {errors.description && (
                             <span className="error-message">
-                                {errors.title}
+                                {errors.description}
                             </span>
                         )}
-                </div>
+                    </div>
 
-                <div className="form-group">
-                    <label>Description</label>
-                    <textarea rows="5" name="description" value={formData.description} onChange={handleChange}></textarea>
-                    {errors.description && (
-                        <span className="error-message">
-                            {errors.description}
-                        </span>
-                    )}
-                </div>
+                    <div className="form-row">
+                         <div className="form-group">
+                            <label>Priority</label>
 
-                <div className="form-group">
-                    <label>Priority</label>
+                            <select name="priority" value={formData.priority} onChange={handleChange}>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                                <option value="Critical">Critical</option>
+                            </select>
+                        </div>
 
-                    <select name="priority" value={formData.priority} onChange={handleChange}>
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                        <option value="Critical">Critical</option>
-                    </select>
-                </div>
+                        <div className="form-group">
+                            <label>Category</label>
 
-                <div className="form-group">
-                    <label>Category</label>
-
-                    <select name="category" value={formData.category} onChange={handleChange}>
-                        <option value="IT">IT</option>
-                        <option value="HR">HR</option>
-                        <option value="Facilities">Facilities</option>
-                    </select>
+                            <select name="category" value={formData.category} onChange={handleChange}>
+                                <option value="IT">IT</option>
+                                <option value="HR">HR</option>
+                                <option value="Facilities">Facilities</option>
+                            </select>
+                        
+                        </div>
+                    </div>
                    
-                </div>
 
-                <div className="form-group">
-                    <label>Requester Name</label>
-                    <input type="text" name="requesterName" value={formData.requesterName} onChange={handleChange}/>
-                    {errors.requesterName && (
-                        <span className="error-message">
-                            {errors.requesterName}
-                        </span>
-                    )}
-                </div>
+                    <div className="form-group">
+                        <label>Requester Name</label>
+                        <input type="text" name="requesterName" placeholder="Enter requester's name" value={formData.requesterName} onChange={handleChange}/>
+                        {errors.requesterName && (
+                            <span className="error-message">
+                                {errors.requesterName}
+                            </span>
+                        )}
+                    </div>
 
-                <button type="submit">
-                    Create Ticket
-                </button>
+                    <button type="submit" className="btn-primary" >
+                        Create Ticket
+                    </button>
 
-            </form>
+                </form>
+            </div>
+            
 
         </div>
     );

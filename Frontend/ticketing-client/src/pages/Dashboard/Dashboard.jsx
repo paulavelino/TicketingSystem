@@ -32,53 +32,67 @@ const Dashboard = () => {
         return matchesStatus && matchesPriority;
     });
 
+    const formatDate = (date) => {
+        return new Date(date).toLocaleString();
+    };
+
     return (
         <div className="dashboard">
             <div className="dashboard__header">
-                <h1>Ticket Dashboard</h1>
 
-                <button onClick={() => navigate(`/create`)}>Create Ticket</button>
+                <div className="dashboard__header-content">
+                    <h1>Internal Ticketing System</h1>
+                    <p>
+                        Manage and track internal support requests.
+                    </p>
+                </div>
+
+                <button className="btn-primary" onClick={() => navigate("/create")}>
+                    + Create Ticket
+                </button>
+
             </div>
 
             <div className="dashboard__summary">
 
             </div>
 
-            <div className="dashboard__filters">
-                <div className="filter-group">
-                    <label>Status</label>
-                    <select
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
-                        <option value="All">All</option>
-                        <option value="Open">Open</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Resolved">Resolved</option>
-                    </select>
-                </div>
+            <div className="dashboard__toolbar">
+                <div className="dashboard__filters">
+                    <div className="filter-group">
+                        <label>Status</label>
+                        <select
+                            value={statusFilter}
+                            onChange={(e) => setStatusFilter(e.target.value)}
+                        >
+                            <option value="All">All</option>
+                            <option value="Open">Open</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                        </select>
+                    </div>
 
-                <div className="filter-group">
-                    <label>Priority</label>
-                    <select
-                        value={priorityFilter}
-                        onChange={(e) => setPriorityFilter(e.target.value)}
-                    >
-                        <option value="All">All</option>
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                        <option value="Critical">Critical</option>
-                    </select>
+                    <div className="filter-group">
+                        <label>Priority</label>
+                        <select
+                            value={priorityFilter}
+                            onChange={(e) => setPriorityFilter(e.target.value)}
+                        >
+                            <option value="All">All</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Critical">Critical</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div className="dashboard__table">
-                <div className="dashboard__table">
+            <div className="dashboard__card">
+                <div className="dashboard__table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Title</th>
                                 <th>Requester</th>
                                 <th>Category</th>
@@ -94,24 +108,35 @@ const Dashboard = () => {
                             {filteredTickets.length > 0 ? (
                                 filteredTickets.map((ticket) => (
                                     <tr key={ticket.ticketId}>
-                                        <td>{ticket.ticketId}</td>
-                                        <td>{ticket.title}</td>
+                                        <td className="ticket-title">{ticket.title}</td>
                                         <td>{ticket.requesterName}</td>
                                         <td>{ticket.category}</td>
-                                        <td>{ticket.priority}</td>
-                                        <td>{ticket.status}</td>
-                                        <td>{ticket.assignedTo || "-"}</td>
                                         <td>
-                                            {new Date(ticket.createdDate).toLocaleDateString()}
+                                            <span className={`priority-badge ${ticket.priority.toLowerCase()}`}>
+                                                {ticket.priority}
+                                            </span>
                                         </td>
                                         <td>
-                                            <button onClick={() => navigate(`/ticket/${ticket.ticketId}`)}>View</button>
+                                            <span className={`status-badge ${ticket.status.replace(/\s+/g, "-").toLowerCase()}`}>
+                                                {ticket.status}
+                                            </span>
+                                        </td>
+                                        <td> {ticket.assignedTo
+        ? ticket.assignedTo
+        : <span className="unassigned">Unassigned</span>}</td>
+                                        <td>
+                                            {formatDate(ticket.createdDate)}
+                                        </td>
+                                        <td>
+                                            <button className="btn-view" onClick={() => navigate(`/ticket/${ticket.ticketId}`)} >
+                                                View
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="9">
+                                    <td colSpan="9" className="empty-state">
                                         No tickets found.
                                     </td>
                                 </tr>
@@ -119,7 +144,9 @@ const Dashboard = () => {
                         </tbody>
                     </table>
                 </div>
+                
             </div>
+            
         </div>
     );
 };

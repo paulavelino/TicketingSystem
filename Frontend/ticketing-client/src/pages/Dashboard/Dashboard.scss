@@ -1,54 +1,222 @@
 .dashboard {
-    padding: 24px;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 24px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-    }
+.dashboard__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
 
-    &__summary {
-        margin-bottom: 24px;
-    }
+.dashboard__header-content h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #1f2937;
+}
 
-    &__table {
+.dashboard__header-content p {
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.btn-primary {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: .95rem;
+    font-weight: 600;
+    transition: .2s ease;
+}
 
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
+.btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
 
-        th {
-            background: #f5f5f5;
-        }
 
-        tbody tr:hover {
-            background: #fafafa;
-            cursor: pointer;
-        }
-    }
+//tool bar
+
+.dashboard__toolbar {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
 }
 
 .dashboard__filters {
     display: flex;
-    gap: 16px;
-    margin-bottom: 20px;
+    gap: 24px;
 }
 
 .filter-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+}
+
+.filter-group label {
+    font-size: .85rem;
+    color: #6b7280;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
 .filter-group select {
     min-width: 180px;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: .95rem;
+    outline: none;
+}
+
+.filter-group select:focus {
+    border-color: #2563eb;
+}
+
+
+//table
+
+.dashboard__card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+    overflow: hidden;
+}
+
+.dashboard__table-wrapper {
+    overflow-x: auto;
+}
+
+.dashboard__card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dashboard__card thead {
+    background: #f8fafc;
+}
+
+.dashboard__card th {
+    text-align: left;
+    padding: 16px;
+    font-size: .9rem;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard__card td {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #374151;
+    font-size: .95rem;
+}
+
+.dashboard__card tbody tr {
+    transition: background .2s;
+}
+
+.dashboard__card tbody tr:hover {
+    background: #f9fafb;
+}
+
+.ticket-title{
+    font-weight:600;
+    color:#111827;
+}
+
+.unassigned{
+    color:#9ca3af;
+    font-style:italic;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px;
+    color: #9ca3af;
+    font-size: 1rem;
+}
+
+// status badges
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-badge.open {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-badge.in-progress {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.status-badge.resolved {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+
+// priority badges
+
+.priority-badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: .8rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.priority-badge.low {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.priority-badge.medium {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.priority-badge.high {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+.priority-badge.critical {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+// view button
+
+.btn-view {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: .85rem;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn-view:hover {
+    background: #1d4ed8;
 }
