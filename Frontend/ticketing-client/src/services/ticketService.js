@@ -7,9 +7,8 @@ const ticketService = {
 
     createTicket: (data) => api.post("/Ticket", data),
 
-    updateTicket: (id, data) => api.put(`/Ticket/${id}`, data),
+    updateTicket: (id, data) => api.put(`/Ticket/${id}`, data)
 
-    assignTicket: (id, data) => api.put(`/Ticket/${id}/assign`, data)
 };
 
 export default ticketService;

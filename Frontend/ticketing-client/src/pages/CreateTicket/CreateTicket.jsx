@@ -12,6 +12,7 @@ const CreateTicket = () => {
         category: "IT",
         requesterName: ""
     });
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,10 +21,39 @@ const CreateTicket = () => {
             ...prev,
             [name]: value
         }));
+
+        setErrors((prev) => ({
+            ...prev,
+            [name]: ""
+        }));
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!formData.title.trim()) {
+            newErrors.title = "Title is required.";
+        }
+
+        if (!formData.description.trim()) {
+            newErrors.description = "Description is required.";
+        }
+
+        if (!formData.requesterName.trim()) {
+            newErrors.requesterName = "Requester name is required.";
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         try {
             await ticketService.createTicket(formData);
@@ -47,11 +77,21 @@ const CreateTicket = () => {
                 <div className="form-group">
                     <label>Title</label>
                     <input type="text" name="title" value={formData.title} onChange={handleChange}/>
+                        {errors.title && (
+                            <span className="error-message">
+                                {errors.title}
+                            </span>
+                        )}
                 </div>
 
                 <div className="form-group">
                     <label>Description</label>
                     <textarea rows="5" name="description" value={formData.description} onChange={handleChange}></textarea>
+                    {errors.description && (
+                        <span className="error-message">
+                            {errors.description}
+                        </span>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -73,11 +113,17 @@ const CreateTicket = () => {
                         <option value="HR">HR</option>
                         <option value="Facilities">Facilities</option>
                     </select>
+                   
                 </div>
 
                 <div className="form-group">
                     <label>Requester Name</label>
                     <input type="text" name="requesterName" value={formData.requesterName} onChange={handleChange}/>
+                    {errors.requesterName && (
+                        <span className="error-message">
+                            {errors.requesterName}
+                        </span>
+                    )}
                 </div>
 
                 <button type="submit">

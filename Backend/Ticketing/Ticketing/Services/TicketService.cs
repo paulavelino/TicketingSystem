@@ -99,30 +99,8 @@ namespace Ticketing.Services
                 return false;
             }
 
-            ticket.Title = request.Title;
-            ticket.Description = request.Description;
-            ticket.RequesterName = request.RequesterName;
-            ticket.Category = request.Category;
-            ticket.Priority = request.Priority;
             ticket.AssignedTo = request.AssignedTo;
             ticket.Status = request.Status;
-            ticket.UpdatedDate = DateTime.Now;
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> AssignTicketAsync(int id, AssignTicketRequest request)
-        {
-            var ticket = await _context.Tickets.FindAsync(id);
-
-            if (ticket == null)
-            {
-                return false;
-            }
-
-            ticket.AssignedTo = request.AssignedTo;
             ticket.UpdatedDate = DateTime.Now;
 
             await _context.SaveChangesAsync();

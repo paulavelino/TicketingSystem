@@ -9,7 +9,6 @@ namespace Ticketing.Services.Interfaces
         Task<TicketResponse?> GetTicketByIdAsync(int id);
         Task<TicketResponse> CreateTicketAsync(CreateTicketRequest request);
         Task<bool> UpdateTicketAsync(int id, UpdateTicketRequest request);
-        Task<bool> AssignTicketAsync(int id, AssignTicketRequest request);
 
     }
 }

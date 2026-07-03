@@ -8,6 +8,13 @@ const TicketDetail = () => {
     const [ticket, setTicket] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
+    const agents = [
+        "Paul",
+        "Joanna",
+        "Bob",
+        "Alice",
+        "Charlie",
+    ];
 
     useEffect(() => {
         loadTicket();
@@ -24,14 +31,9 @@ const TicketDetail = () => {
         }
     };
 
-    const handleSaveStatus = async () => {
+    const handleSaveChanges = async () => {
         try {
             await ticketService.updateTicket(ticket.ticketId, {
-                Title: ticket.title,
-                Description: ticket.description,
-                Priority: ticket.priority,
-                Category: ticket.category,
-                RequesterName: ticket.requesterName,
                 Status: ticket.status,
                 AssignedTo: ticket.assignedTo
             });
@@ -69,7 +71,6 @@ const TicketDetail = () => {
             console.error(error);
         }
     };
-
 
     if (!ticket) {
         return <p>Loading...</p>;
@@ -118,15 +119,33 @@ const TicketDetail = () => {
         </div>
 
         <div>
-            <strong>Assigned To:</strong> {ticket.assignedTo || "Unassigned"}
+            <strong>Assigned To:</strong>
+
+            <select
+                value={ticket.assignedTo || ""}
+                onChange={(e) =>
+                    setTicket((prev) => ({
+                        ...prev,
+                        assignedTo: e.target.value
+                    }))
+                }
+            >
+                <option value="">Unassigned</option>
+
+                {agents.map((agent) => (
+                    <option key={agent} value={agent}>
+                        {agent}
+                    </option>
+                ))}
+            </select>
         </div>
 
         <div>
             <strong>Created At:</strong> {ticket.createdDate}
         </div>
 
-        <button onClick={handleSaveStatus}>
-            Save Status
+        <button onClick={handleSaveChanges}>
+            Save Changes
         </button>
 
         <hr />

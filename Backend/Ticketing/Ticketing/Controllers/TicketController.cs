@@ -61,17 +61,5 @@ namespace Ticketing.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}/assign")]
-        public async Task<IActionResult> AssignTicket(int id, AssignTicketRequest request)
-        {
-            var assigned = await _ticketService.AssignTicketAsync(id, request);
-
-            if (!assigned)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
     }
 }
