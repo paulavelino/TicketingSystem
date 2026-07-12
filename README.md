@@ -260,7 +260,6 @@ This project is intentionally an MVP and has a few known limitations:
 - Comments do not record the author of the comment.
 - No authentication or authorization has been implemented.
 - Dashboard does not include search or pagination.
-- Activity log/history is not implemented.
 - File uploads are not supported.
 
 These limitations were accepted to keep the project within the scope of the assessment.
