@@ -276,8 +276,6 @@ If I had another day to continue development, I would prioritize the following i
 3. Add an activity log to track ticket history.
 4. Add search and pagination on the dashboard.
 5. Support file attachments for tickets.
-6. Improve user feedback with toast notifications instead of browser alerts.
-7. Add automated unit and integration tests.
 
 ---
 
